@@ -1,0 +1,11 @@
+.add-button {
+  padding: 0;
+  margin: 0;
+  width: 150px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  justify-self: end;
+}
