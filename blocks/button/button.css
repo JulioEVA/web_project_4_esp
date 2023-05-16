@@ -1,5 +1,6 @@
 .button {
   background: none;
+  cursor: pointer;
   border: none;
   align-self: center;
   padding: 0;

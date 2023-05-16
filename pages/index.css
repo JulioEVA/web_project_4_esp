@@ -23,6 +23,13 @@
 @import url(../blocks/like-button/like-button.css);
 @import url(../blocks/delete-button/delete-button.css);
 
+@import url(../blocks/edit-popup/edit-popup.css);
+@import url(../blocks/edit-popup/__container/edit-popup__container.css);
+@import url(../blocks/close-button/close-button.css);
+@import url(../blocks/edit-popup/__title/edit-popup__title.css);
+@import url(../blocks/save-button/save-button.css);
+@import url(../blocks/input/input.css);
+
 /* * {
   border: 1px solid red;
 } */

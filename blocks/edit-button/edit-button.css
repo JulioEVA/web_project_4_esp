@@ -1,4 +1,7 @@
 .edit-button {
+  position: absolute;
+  top: 213px;
+  right: 828px;
   width: 24px;
   height: 24px;
 }
