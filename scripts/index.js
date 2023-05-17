@@ -117,6 +117,7 @@ function closeImagePopup() {
  * @param {*} e El evento de hacer click en un elemento
  */
 elements.onclick = (e) => {
+  console.log(e.target);
   if (e.target.className != "element__image") {
     return;
   }
@@ -134,7 +135,7 @@ elements.onclick = (e) => {
  * @param {} e El evento de hacer click
  * @returns Salida de la función
  */
-elements.onclick = (e) => {
+document.onclick = (e) => {
   if (
     e.target.className != "like" &&
     e.target.className != "like like_active"
