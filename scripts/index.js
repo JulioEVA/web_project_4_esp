@@ -1,12 +1,17 @@
 const btnEdit = document.querySelector(".edit-button");
 const btnClose = document.querySelector(".close-button");
+//Seleccionamos el segundo botón de cerrado que nos arroja querySelectorAll
+const btnCloseImagePopup = document.querySelectorAll(".close-button")[1];
+const imagePopup = document.querySelector(".image-popup");
 const btnAdd = document.querySelector(".add-button");
 const modal = document.querySelector(".edit-popup");
 const modalButton = document.querySelector(".save-button");
 const modalTitle = document.querySelector(".edit-popup__title");
 const profileName = document.querySelector(".profile__title");
+const formElement = document.querySelector("form");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const inputs = document.querySelectorAll(".input");
+const elements = document.querySelector(".elements");
 
 //El primer input que encontró querySelectorAll
 const nameInput = inputs[0];
@@ -14,6 +19,7 @@ const nameInput = inputs[0];
 const aboutInput = inputs[1];
 const elementTitle = nameInput;
 const imageLink = aboutInput;
+
 /**
  * Abre el modal de edición
  */
@@ -35,6 +41,10 @@ function closeModal(evt) {
   modal.close();
 }
 
+/**
+ * Abre el modal para añadir un elemento.
+ * @param {*} evt El evento de envío de formulario
+ */
 function openAddModal(evt) {
   modalTitle.textContent = "Nuevo lugar";
   modalButton.textContent = "Crear";
@@ -44,9 +54,6 @@ function openAddModal(evt) {
   aboutInput.value = "";
   modal.showModal();
 }
-
-// Busquemos el formulario en el DOM
-const formElement = document.querySelector("form");
 
 /**
  * Maneja el envío del formulario para el caso del perfil.
@@ -95,12 +102,33 @@ function handleElementFormSubmit(evt) {
   modal.close();
 }
 
-// Conecta el manipulador (handler) al formulario:
-// se observará el evento de entrega
+/**
+ * Cierra la imagen maximizada
+ */
+function closeImagePopup() {
+  imagePopup.close();
+}
+
+/**
+ * Obtiene el elemento al que se le hizo click y
+ * muestra la imagen en grande.
+ *
+ * @param {*} e El evento de hacer click en un elemento
+ */
+elements.onclick = (e) => {
+  if (e.target.className != "element__image") {
+    return;
+  }
+
+  const image = document.querySelector(".image-popup__image");
+  image.src = e.target.src;
+  imagePopup.showModal();
+};
 
 formElement.addEventListener("submit", handleProfileFormSubmit);
 formElement.addEventListener("submit", handleElementFormSubmit);
 
+btnCloseImagePopup.addEventListener("click", closeImagePopup);
 btnAdd.addEventListener("click", openAddModal);
 btnEdit.addEventListener("click", openModalEdit);
 btnClose.addEventListener("click", closeModal);

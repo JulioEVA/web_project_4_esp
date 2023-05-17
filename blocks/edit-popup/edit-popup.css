@@ -1,12 +1,4 @@
 .edit-popup {
-  padding: 0;
-  border: 0;
-  overflow: visible;
-  position: relative;
   width: 430px;
   height: 330px;
-}
-
-.edit-popup::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
 }

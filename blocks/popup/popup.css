@@ -1,0 +1,10 @@
+.popup {
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  position: relative;
+}
+
+.popup::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
