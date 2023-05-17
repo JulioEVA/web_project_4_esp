@@ -5,3 +5,10 @@
   margin-right: auto;
   width: 414px;
 }
+
+@media screen and (max-width: 900px) {
+  .profile__info {
+    width: 280px;
+    justify-content: center;
+  }
+}

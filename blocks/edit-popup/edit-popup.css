@@ -2,3 +2,9 @@
   width: 430px;
   height: 330px;
 }
+@media screen and (max-width: 900px) {
+  .edit-popup {
+    width: 282px;
+    height: 322px;
+  }
+}

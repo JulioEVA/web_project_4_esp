@@ -12,3 +12,10 @@
   border-bottom: 1px solid;
   border-color: rgba(0, 0, 0, 0.2);
 }
+
+@media screen and (max-width: 900px) {
+  .input {
+    width: 238px;
+    height: 26px;
+  }
+}
