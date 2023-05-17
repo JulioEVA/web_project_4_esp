@@ -87,6 +87,7 @@ function handleElementFormSubmit(evt) {
     `<div class="element">
   <img
     class="element__image"
+    title="${elementTitle.value}"
     src="${imageLink.value}"
     alt="Imagen proporcionada por el usuario"
   />
@@ -95,7 +96,7 @@ function handleElementFormSubmit(evt) {
   </button>
   <h3 class="element__title text">${elementTitle.value}</h3>
   <button class="like-button button">
-    <img src="./images/like-button.png" alt="Icono de corazón" />
+    <img class="like" src="./images/like-button.png" alt="Icono de corazón" />
   </button>
 </div>`
   );
@@ -120,9 +121,34 @@ elements.onclick = (e) => {
     return;
   }
 
+  const imageTitle = document.querySelector(".image-popup__title");
   const image = document.querySelector(".image-popup__image");
   image.src = e.target.src;
+  imageTitle.textContent = e.target.title;
   imagePopup.showModal();
+};
+
+/**
+ * Cambia la apariencia del botón de me gusta
+ *
+ * @param {} e El evento de hacer click
+ * @returns Salida de la función
+ */
+elements.onclick = (e) => {
+  if (
+    e.target.className != "like" &&
+    e.target.className != "like like_active"
+  ) {
+    return;
+  } else {
+    if (e.target.className == "like") {
+      e.target.src = "./images/like-button_active.png";
+      e.target.className = "like like_active";
+    } else {
+      e.target.src = "./images/like-button.png";
+      e.target.className = "like";
+    }
+  }
 };
 
 formElement.addEventListener("submit", handleProfileFormSubmit);
