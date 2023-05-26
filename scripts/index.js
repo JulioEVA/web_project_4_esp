@@ -1,9 +1,9 @@
 const btnEdit = document.querySelector(".edit-button");
 const btnClose = document.querySelector(".close-button");
+const btnAdd = document.querySelector(".add-button");
 //Seleccionamos el segundo botón de cerrado que nos arroja querySelectorAll
 const btnCloseImagePopup = document.querySelectorAll(".close-button")[1];
 const imagePopup = document.querySelector(".image-popup");
-const btnAdd = document.querySelector(".add-button");
 const modal = document.querySelector(".edit-popup");
 const modalButton = document.querySelector(".save-button");
 const modalTitle = document.querySelector(".edit-popup__title");
@@ -12,14 +12,12 @@ const formElement = document.querySelector("form");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const inputs = document.querySelectorAll(".input");
 const elements = document.querySelector(".elements");
-
 //El primer input que encontró querySelectorAll
 const nameInput = inputs[0];
 //El segundo input que encontró querySelectorAll
 const aboutInput = inputs[1];
 const elementTitle = nameInput;
 const imageLink = aboutInput;
-
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -46,7 +44,6 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
   },
 ];
-
 /**
  * Carga los elementos por defecto al abrir la página.
  */
@@ -119,6 +116,11 @@ function loadElement(elementTitle, imageLink) {
   newElementTitle.textContent = elementTitle;
 
   elements.append(newElement);
+
+  const btnDelete = newElement.querySelector(".delete-button");
+  btnDelete.addEventListener("click", (evt) => {
+    evt.target.closest(".element").remove();
+  });
 }
 
 /**
@@ -132,7 +134,6 @@ function handleElementFormSubmit(evt) {
   evt.preventDefault();
 
   loadElement(elementTitle.value, imageLink.value);
-
   modal.close();
 }
 
