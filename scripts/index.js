@@ -81,25 +81,17 @@ function handleElementFormSubmit(evt) {
   evt.preventDefault();
 
   const elements = document.querySelector(".elements");
+  const elementTemplate = document.querySelector(".element-template").content;
+  const newElement = elementTemplate.querySelector(".element").cloneNode(true);
+  const newElementImage = newElement.querySelector(".element__image");
+  const newElementTitle = newElement.querySelector(".element__title");
 
-  elements.insertAdjacentHTML(
-    "beforeend",
-    `<div class="element">
-  <img
-    class="element__image"
-    title="${elementTitle.value}"
-    src="${imageLink.value}"
-    alt="Imagen proporcionada por el usuario"
-  />
-  <button class="delete-button button">
-    <img src="./images/delete-button.png" alt="Icono de borrar" />
-  </button>
-  <h3 class="element__title text">${elementTitle.value}</h3>
-  <button class="like-button button">
-    <img class="like" src="./images/like-button.png" alt="Icono de corazón" />
-  </button>
-</div>`
-  );
+  newElementImage.src = imageLink.value;
+  newElementImage.title = elementTitle.value;
+  newElementTitle.textContent = elementTitle.value;
+
+  elements.append(newElement);
+
   modal.close();
 }
 
