@@ -20,6 +20,38 @@ const aboutInput = inputs[1];
 const elementTitle = nameInput;
 const imageLink = aboutInput;
 
+const initialCards = [
+  {
+    name: "Valle de Yosemite",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
+  },
+  {
+    name: "Lago Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lake-louise.jpg",
+  },
+  {
+    name: "Montañas Calvas",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
+  },
+  {
+    name: "Parque Nacional de la Vanoise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
+  },
+];
+
+/**
+ * Carga los elementos por defecto al abrir la página.
+ */
+initialCards.forEach((item) => loadElement(item.name, item.link));
+
 /**
  * Abre el modal de edición
  */
@@ -71,6 +103,25 @@ function handleProfileFormSubmit(evt) {
 }
 
 /**
+ * Carga un elemento en la sección de elementos de la página.
+ *
+ * @param {*} elementTitle El título del elemento.
+ * @param {*} imageLink La imagen del elemento.
+ */
+function loadElement(elementTitle, imageLink) {
+  const elementTemplate = document.querySelector(".element-template").content;
+  const newElement = elementTemplate.querySelector(".element").cloneNode(true);
+  const newElementImage = newElement.querySelector(".element__image");
+  const newElementTitle = newElement.querySelector(".element__title");
+
+  newElementImage.title = elementTitle;
+  newElementImage.src = imageLink;
+  newElementTitle.textContent = elementTitle;
+
+  elements.append(newElement);
+}
+
+/**
  * Maneja el envío del formulario para el caso del element
  * @param {*} evt El evento de envío de formulario
  */
@@ -80,17 +131,7 @@ function handleElementFormSubmit(evt) {
   }
   evt.preventDefault();
 
-  const elements = document.querySelector(".elements");
-  const elementTemplate = document.querySelector(".element-template").content;
-  const newElement = elementTemplate.querySelector(".element").cloneNode(true);
-  const newElementImage = newElement.querySelector(".element__image");
-  const newElementTitle = newElement.querySelector(".element__title");
-
-  newElementImage.src = imageLink.value;
-  newElementImage.title = elementTitle.value;
-  newElementTitle.textContent = elementTitle.value;
-
-  elements.append(newElement);
+  loadElement(elementTitle.value, imageLink.value);
 
   modal.close();
 }
@@ -106,40 +147,39 @@ function closeImagePopup() {
  * Obtiene el elemento al que se le hizo click y
  * muestra la imagen en grande.
  *
- * @param {*} e El evento de hacer click en un elemento
+ * @param {*} evt El evento de hacer click en un elemento
  */
-elements.onclick = (e) => {
-  console.log(e.target);
-  if (e.target.className != "element__image") {
+elements.onclick = (evt) => {
+  if (evt.target.className != "element__image") {
     return;
   }
 
   const imageTitle = document.querySelector(".image-popup__title");
   const image = document.querySelector(".image-popup__image");
-  image.src = e.target.src;
-  imageTitle.textContent = e.target.title;
+  image.src = evt.target.src;
+  imageTitle.textContent = evt.target.title;
   imagePopup.showModal();
 };
 
 /**
  * Cambia la apariencia del botón de me gusta
  *
- * @param {} e El evento de hacer click
+ * @param {} evt El evento de hacer click
  * @returns Salida de la función
  */
-document.onclick = (e) => {
+document.onclick = (evt) => {
   if (
-    e.target.className != "like" &&
-    e.target.className != "like like_active"
+    evt.target.className != "like" &&
+    evt.target.className != "like like_active"
   ) {
     return;
   } else {
-    if (e.target.className == "like") {
-      e.target.src = "./images/like-button_active.png";
-      e.target.className = "like like_active";
+    if (evt.target.className == "like") {
+      evt.target.src = "./images/like-button_active.png";
+      evt.target.className = "like like_active";
     } else {
-      e.target.src = "./images/like-button.png";
-      e.target.className = "like";
+      evt.target.src = "./images/like-button.png";
+      evt.target.className = "like";
     }
   }
 };
