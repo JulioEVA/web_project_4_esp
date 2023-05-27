@@ -67,7 +67,30 @@ function openModalEdit(evt) {
  */
 function closeModal(evt) {
   evt.preventDefault();
-  modal.close();
+  modal.setAttribute("closing", true);
+  modal.addEventListener(
+    "animationend",
+    () => {
+      modal.removeAttribute("closing");
+      modal.close();
+    },
+    { once: true }
+  );
+}
+
+/**
+ * Cierra la imagen maximizada
+ */
+function closeImagePopup() {
+  imagePopup.setAttribute("closing", true);
+  imagePopup.addEventListener(
+    "animationend",
+    () => {
+      imagePopup.removeAttribute("closing");
+      imagePopup.close();
+    },
+    { once: true }
+  );
 }
 
 /**
@@ -135,13 +158,6 @@ function handleElementFormSubmit(evt) {
 
   loadElement(elementTitle.value, imageLink.value);
   modal.close();
-}
-
-/**
- * Cierra la imagen maximizada
- */
-function closeImagePopup() {
-  imagePopup.close();
 }
 
 /**

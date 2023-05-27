@@ -5,6 +5,44 @@
   position: relative;
 }
 
+.popup[open] {
+  animation: fade-in 500ms forwards;
+}
+
+.popup[open]::backdrop {
+  animation: fade-in 500ms forwards;
+}
+
+.popup[closing] {
+  display: block;
+  pointer-events: none;
+  inset: 0;
+  animation: fade-out 500ms forwards;
+}
+
+.popup[closing]::backdrop {
+  animation: fade-out 500ms forwards;
+}
+
 .popup::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
