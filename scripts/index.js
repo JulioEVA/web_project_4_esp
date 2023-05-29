@@ -138,7 +138,7 @@ function loadElement(elementTitle, imageLink) {
   newElementImage.src = imageLink;
   newElementTitle.textContent = elementTitle;
 
-  elements.append(newElement);
+  elements.prepend(newElement);
 
   const btnDelete = newElement.querySelector(".delete-button");
   btnDelete.addEventListener("click", (evt) => {
