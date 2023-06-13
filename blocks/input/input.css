@@ -13,6 +13,14 @@
   border-color: rgba(0, 0, 0, 0.2);
 }
 
+.input:valid {
+  border-bottom: 1px solid green;
+}
+
+.input:invalid {
+  border-bottom: 1px solid red;
+}
+
 @media screen and (max-width: 900px) {
   .input {
     width: 238px;

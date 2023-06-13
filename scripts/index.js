@@ -57,40 +57,42 @@ function openModalEdit(evt) {
   modalButton.textContent = "Guardar";
   nameInput.placeholder = "Nombre";
   aboutInput.placeholder = "Acerca de mí";
+  aboutInput.maxlength = "200";
+  aboutInput.type = "text";
   nameInput.value = profileName.textContent;
   aboutInput.value = profileSubtitle.textContent;
   modal.showModal();
+}
+/**
+ * Cierra el popup abierto con una transición suave.
+ * @param {*} evt El evento de cerrado
+ * @param {*} popup El popup en cuestión.
+ */
+function closePopup(evt, popup) {
+  popup.setAttribute("closing", true);
+  popup.addEventListener(
+    "animationend",
+    () => {
+      popup.removeAttribute("closing");
+      popup.close();
+    },
+    { once: true }
+  );
+  evt.preventDefault;
 }
 
 /**
  * Cierra el modal de edición
  */
 function closeModal(evt) {
-  evt.preventDefault();
-  modal.setAttribute("closing", true);
-  modal.addEventListener(
-    "animationend",
-    () => {
-      modal.removeAttribute("closing");
-      modal.close();
-    },
-    { once: true }
-  );
+  closePopup(evt, modal);
 }
 
 /**
  * Cierra la imagen maximizada
  */
-function closeImagePopup() {
-  imagePopup.setAttribute("closing", true);
-  imagePopup.addEventListener(
-    "animationend",
-    () => {
-      imagePopup.removeAttribute("closing");
-      imagePopup.close();
-    },
-    { once: true }
-  );
+function closeImagePopup(evt) {
+  closePopup(evt, imagePopup);
 }
 
 /**
@@ -104,6 +106,8 @@ function openAddModal(evt) {
   imageLink.placeholder = "Enlace a la imagen";
   nameInput.value = "";
   aboutInput.value = "";
+  aboutInput.removeAttribute("maxlength");
+  aboutInput.type = "url";
   modal.showModal();
 }
 
@@ -200,6 +204,15 @@ document.onclick = (evt) => {
     }
   }
 };
+
+function closeOnOutsideClick(evt) {
+  if (evt.target === modal || evt.target === imagePopup) {
+    closePopup(evt, evt.target);
+  }
+}
+
+modal.addEventListener("click", closeOnOutsideClick);
+imagePopup.addEventListener("click", closeOnOutsideClick);
 
 formElement.addEventListener("submit", handleProfileFormSubmit);
 formElement.addEventListener("submit", handleElementFormSubmit);

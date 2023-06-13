@@ -32,13 +32,31 @@
       <section class="elements"></section>
     </main>
     <dialog class="edit-popup popup">
-      <form class="edit-popup__container">
-        <button class="close-button button">
+      <form class="form edit-popup__container" novalidate>
+        <button type="button" class="close-button button">
           <img src="./images/close-button.png" alt="Icono de una X" />
         </button>
         <h2 class="edit-popup__title text">Editar perfil</h2>
-        <input required class="input" type="text" placeholder="Nombre" />
-        <input required class="input" type="text" placeholder="Acerca de mí" />
+        <input
+          id="name-input"
+          maxlength="40"
+          minlength="2"
+          required
+          class="input"
+          type="text"
+          placeholder="Nombre"
+        />
+        <span class="form__input-error name-input-error text"></span>
+        <input
+          id="about-input"
+          maxlength="200"
+          minlength="2"
+          required
+          class="input"
+          type="text"
+          placeholder="Acerca de mí"
+        />
+        <span class="form__input-error about-input-error text"></span>
         <button class="save-button button" type="submit">Guardar</button>
       </form>
     </dialog>
@@ -74,5 +92,6 @@
       </div>
     </template>
     <script src="scripts/index.js"></script>
+    <script src="scripts/validation.js"></script>
   </body>
 </html>
