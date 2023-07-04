@@ -1,7 +1,7 @@
+import { Card } from "./Card.js";
 const btnEdit = document.querySelector(".edit-button");
 const btnClose = document.querySelector(".close-button");
 const btnAdd = document.querySelector(".add-button");
-//Seleccionamos el segundo botón de cerrado que nos arroja querySelectorAll
 const btnCloseImagePopup = document.querySelectorAll(".close-button")[1];
 const imagePopup = document.querySelector(".image-popup");
 const modal = document.querySelector(".edit-popup");
@@ -12,9 +12,7 @@ const formElement = document.querySelector("form");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const inputs = document.querySelectorAll(".input");
 const elements = document.querySelector(".elements");
-//El primer input que encontró querySelectorAll
 const nameInput = inputs[0];
-//El segundo input que encontró querySelectorAll
 const aboutInput = inputs[1];
 const elementTitle = nameInput;
 const imageLink = aboutInput;
@@ -45,12 +43,23 @@ const initialCards = [
   },
 ];
 /**
- * Carga los elementos por defecto al abrir la página.
+ * Load elements on page startup.
  */
 initialCards.forEach((item) => loadElement(item.name, item.link));
 
 /**
- * Abre el modal de edición
+ * Loads an element in the element section.
+ *
+ * @param {*} elementTitle The element's title.
+ * @param {*} imageLink The element's image.
+ */
+function loadElement(elementTitle, imageLink) {
+  const newCard = new Card(elementTitle, imageLink, ".element-template");
+  elements.prepend(newCard.createCardElement());
+}
+
+/**
+ * Opens edit modal
  */
 function openModalEdit(evt) {
   modalTitle.textContent = "Editar perfil";
@@ -64,9 +73,9 @@ function openModalEdit(evt) {
   modal.showModal();
 }
 /**
- * Cierra el popup abierto con una transición suave.
- * @param {*} evt El evento de cerrado
- * @param {*} popup El popup en cuestión.
+ * Closes the open popup with a smooth transition.
+ * @param {*} evt The closing event.
+ * @param {*} popup The popup itself.
  */
 function closePopup(evt, popup) {
   popup.setAttribute("closing", true);
@@ -82,22 +91,22 @@ function closePopup(evt, popup) {
 }
 
 /**
- * Cierra el modal de edición
+ * Closes de edit modal.
  */
 function closeModal(evt) {
   closePopup(evt, modal);
 }
 
 /**
- * Cierra la imagen maximizada
+ * Closes the open image.
  */
 function closeImagePopup(evt) {
   closePopup(evt, imagePopup);
 }
 
 /**
- * Abre el modal para añadir un elemento.
- * @param {*} evt El evento de envío de formulario
+ * Opens the modal to add a new element.
+ * @param {*} evt The form submit element.
  */
 function openAddModal(evt) {
   modalTitle.textContent = "Nuevo lugar";
@@ -112,8 +121,8 @@ function openAddModal(evt) {
 }
 
 /**
- * Maneja el envío del formulario para el caso del perfil.
- * @param {*} evt El evento de envío de formulario
+ * Handles the form submit for the profile case.
+ * @param {*} evt The form's submit event.
  */
 function handleProfileFormSubmit(evt) {
   if (modalTitle.textContent == "Nuevo lugar") {
@@ -127,32 +136,8 @@ function handleProfileFormSubmit(evt) {
 }
 
 /**
- * Carga un elemento en la sección de elementos de la página.
- *
- * @param {*} elementTitle El título del elemento.
- * @param {*} imageLink La imagen del elemento.
- */
-function loadElement(elementTitle, imageLink) {
-  const elementTemplate = document.querySelector(".element-template").content;
-  const newElement = elementTemplate.querySelector(".element").cloneNode(true);
-  const newElementImage = newElement.querySelector(".element__image");
-  const newElementTitle = newElement.querySelector(".element__title");
-
-  newElementImage.title = elementTitle;
-  newElementImage.src = imageLink;
-  newElementTitle.textContent = elementTitle;
-
-  elements.prepend(newElement);
-
-  const btnDelete = newElement.querySelector(".delete-button");
-  btnDelete.addEventListener("click", (evt) => {
-    evt.target.closest(".element").remove();
-  });
-}
-
-/**
- * Maneja el envío del formulario para el caso del element
- * @param {*} evt El evento de envío de formulario
+ * Handles the form submit case for the element case.
+ * @param {*} evt The form's submit event.
  */
 function handleElementFormSubmit(evt) {
   if (modalTitle.textContent == "Editar perfil") {
@@ -163,47 +148,6 @@ function handleElementFormSubmit(evt) {
   loadElement(elementTitle.value, imageLink.value);
   modal.close();
 }
-
-/**
- * Obtiene el elemento al que se le hizo click y
- * muestra la imagen en grande.
- *
- * @param {*} evt El evento de hacer click en un elemento
- */
-elements.onclick = (evt) => {
-  if (evt.target.className != "element__image") {
-    return;
-  }
-
-  const imageTitle = document.querySelector(".image-popup__title");
-  const image = document.querySelector(".image-popup__image");
-  image.src = evt.target.src;
-  imageTitle.textContent = evt.target.title;
-  imagePopup.showModal();
-};
-
-/**
- * Cambia la apariencia del botón de me gusta
- *
- * @param {} evt El evento de hacer click
- * @returns Salida de la función
- */
-document.onclick = (evt) => {
-  if (
-    evt.target.className != "like" &&
-    evt.target.className != "like like_active"
-  ) {
-    return;
-  } else {
-    if (evt.target.className == "like") {
-      evt.target.src = "./images/like-button_active.png";
-      evt.target.className = "like like_active";
-    } else {
-      evt.target.src = "./images/like-button.png";
-      evt.target.className = "like";
-    }
-  }
-};
 
 function closeOnOutsideClick(evt) {
   if (evt.target === modal || evt.target === imagePopup) {
