@@ -32,7 +32,7 @@ class Card {
    * Deletes the element on which the delete button was clicked.
    * @param {*} evt The click event.
    */
-  _deleteHandler(evt) {
+  _handleDelete(evt) {
     evt.target.closest(".element").remove();
   }
 
@@ -40,7 +40,7 @@ class Card {
    * Toggles the "like_active" class.
    * @param {*} evt The click event.
    */
-  _likeHandler(evt) {
+  _handleLike(evt) {
     evt.target.classList.toggle("like_active");
   }
 
@@ -48,7 +48,7 @@ class Card {
    * Shows a bigger version of the clicked image of the element.
    * @param {*} evt The click event
    */
-  _imageHandler(evt) {
+  _handleImageClick(evt) {
     const imageTitle = document.querySelector(".image-popup__title");
     const image = document.querySelector(".image-popup__image");
     image.src = evt.target.src;
@@ -62,13 +62,13 @@ class Card {
    */
   _createEventListeners() {
     const btnDelete = this._newElement.querySelector(".delete-button");
-    btnDelete.addEventListener("click", this._deleteHandler);
+    btnDelete.addEventListener("click", this._handleDelete);
 
     const btnLike = this._newElement.querySelector(".like");
-    btnLike.addEventListener("click", this._likeHandler);
+    btnLike.addEventListener("click", this._handleLike);
 
     const elementImage = this._newElement.querySelector(".element__image");
-    elementImage.addEventListener("click", this._imageHandler);
+    elementImage.addEventListener("click", this._handleImageClick);
   }
 }
 

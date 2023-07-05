@@ -1,4 +1,5 @@
 import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
 const btnEdit = document.querySelector(".edit-button");
 const btnClose = document.querySelector(".close-button");
 const btnAdd = document.querySelector(".add-button");
@@ -11,9 +12,11 @@ const profileName = document.querySelector(".profile__title");
 const formElement = document.querySelector("form");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const inputs = document.querySelectorAll(".input");
+const firstInput = 0;
+const secondInput = 1;
 const elements = document.querySelector(".elements");
-const nameInput = inputs[0];
-const aboutInput = inputs[1];
+const nameInput = inputs[firstInput];
+const aboutInput = inputs[secondInput];
 const elementTitle = nameInput;
 const imageLink = aboutInput;
 const initialCards = [
@@ -154,6 +157,19 @@ function closeOnOutsideClick(evt) {
     closePopup(evt, evt.target);
   }
 }
+
+const formValidator = new FormValidator(
+  {
+    formSelector: ".form",
+    inputSelector: ".input",
+    submitButtonSelector: ".save-button",
+    inactiveButtonClass: "save-button_inactive",
+    inputErrorClass: "input_type_error",
+    errorClass: "form__input-error_active",
+  },
+  formElement
+);
+formValidator.enableValidation();
 
 modal.addEventListener("click", closeOnOutsideClick);
 imagePopup.addEventListener("click", closeOnOutsideClick);
