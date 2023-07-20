@@ -4,25 +4,31 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Around the U.S</title>
   </head>
   <body class="body">
     <header class="header">
-      <img src="./images/logo.png" alt="El logo de la página" class="logo" />
+      <img
+        src="<%=require('./images/logo.png')%>"
+        alt="El logo de la página"
+        class="logo"
+      />
       <hr class="header__separator" />
     </header>
     <main class="main">
       <section class="profile">
         <img
           class="avatar"
-          src="./images/avatar.jpg"
+          src="<%=require('./images/avatar.jpg')%>"
           alt="Foto de perfil del usuario"
         />
         <div class="profile__info">
           <h1 class="profile__title text">Jacques Cousteau</h1>
           <button class="edit-button button">
-            <img src="./images/edit-button.png" alt="icono de editar" />
+            <img
+              src="<%=require('./images/edit-button.png')%>"
+              alt="icono de editar"
+            />
           </button>
           <h2 class="profile__subtitle text">Explorador</h2>
         </div>
@@ -30,12 +36,15 @@
       </section>
       <section class="elements"></section>
     </main>
-    <dialog class="edit-popup popup">
-      <form class="form edit-popup__container" novalidate>
+    <dialog class="edit-popup form-popup popup">
+      <form class="form form-popup__container" novalidate>
         <button type="button" class="close-button button">
-          <img src="./images/close-button.png" alt="Icono de una X" />
+          <img
+            src="<%=require('./images/close-button.png')%>"
+            alt="Icono de una X"
+          />
         </button>
-        <h2 class="edit-popup__title text">Editar perfil</h2>
+        <h2 class="form-popup__title text">Editar perfil</h2>
         <input
           id="name-input"
           maxlength="40"
@@ -59,9 +68,43 @@
         <button class="save-button button" type="submit">Guardar</button>
       </form>
     </dialog>
+    <dialog class="add-popup form-popup popup">
+      <form class="form form-popup__container" novalidate>
+        <button type="button" class="close-button button">
+          <img
+            src="<%=require('./images/close-button.png')%>"
+            alt="Icono de una X"
+          />
+        </button>
+        <h2 class="form-popup__title text">Nuevo lugar</h2>
+        <input
+          id="place-input"
+          maxlength="40"
+          minlength="2"
+          required
+          class="input"
+          type="text"
+          placeholder="Título"
+        />
+        <span class="form__input-error place-input-error text"></span>
+        <input
+          id="link-input"
+          minlength="2"
+          required
+          class="input"
+          type="url"
+          placeholder="Enlace a la imagen"
+        />
+        <span class="form__input-error link-input-error text"></span>
+        <button class="save-button button" type="submit">Crear</button>
+      </form>
+    </dialog>
     <dialog class="image-popup popup">
       <button class="close-button button">
-        <img src="./images/close-button.png" alt="Icono de una X" />
+        <img
+          src="<%=require('./images/close-button.png')%>"
+          alt="Icono de una X"
+        />
       </button>
       <h2 class="image-popup__title text"></h2>
       <img
@@ -78,19 +121,20 @@
           alt="Imagen proporcionada por el usuario"
         />
         <button class="delete-button button">
-          <img src="./images/delete-button.png" alt="Icono de borrar" />
+          <img
+            src="<%=require('./images/delete-button.png')%>"
+            alt="Icono de borrar"
+          />
         </button>
         <h3 class="element__title text"></h3>
         <button class="like-button button">
           <img
             class="like"
-            src="./images/like-button.png"
+            src="<%=require('./images/like-button.png')%>"
             alt="Icono de corazón"
           />
         </button>
       </div>
     </template>
-    <script type="module" src="scripts/index.js"></script>
-    <script type="module" src="scripts/utils.js"></script>
   </body>
 </html>

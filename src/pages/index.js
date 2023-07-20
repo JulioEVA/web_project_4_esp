@@ -1,18 +1,16 @@
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-const firstResult = 0;
-const secondResult = 1;
-const elements = document.querySelector(".elements");
-const formElement = document.querySelector("form");
-const modalTitle = document.querySelector(".edit-popup__title");
+import "./index.css";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+
+const formList = Array.from(document.querySelectorAll(".form"));
 const profileName = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
-const inputs = document.querySelectorAll(".input");
-const nameInput = inputs[firstResult];
-const aboutInput = inputs[secondResult];
-const elementTitle = nameInput;
-const imageLink = aboutInput;
-const modal = document.querySelector(".edit-popup");
+const nameInput = document.querySelector("#name-input");
+const aboutInput = document.querySelector("#about-input");
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -39,11 +37,20 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
   },
 ];
+const section = new Section(
+  { items: initialCards, renderer: loadElement },
+  ".elements"
+);
+const addPopup = new PopupWithForm(handleElementFormSubmit, ".add-popup");
+const editPopup = new PopupWithForm(handleProfileFormSubmit, ".edit-popup");
 
-/**
- * Load elements on page startup.
- */
-initialCards.forEach((item) => loadElement(item.name, item.link));
+const userInfo = new UserInfo({
+  userName: profileName.textContent,
+  userJob: profileSubtitle.textContent,
+});
+
+userInfo.setUserInfo(profileName.textContent, profileSubtitle.textContent);
+section.renderItems();
 
 /**
  * Loads an element in the element section.
@@ -51,9 +58,13 @@ initialCards.forEach((item) => loadElement(item.name, item.link));
  * @param {*} elementTitle The element's title.
  * @param {*} imageLink The element's image.
  */
-function loadElement(elementTitle, imageLink) {
-  const newCard = new Card(elementTitle, imageLink, ".element-template");
-  elements.prepend(newCard.createCardElement());
+function loadElement({ name, link }) {
+  const newCard = new Card(name, link, ".element-template", (evt) => {
+    const imagePopup = new PopupWithImage(".image-popup");
+    imagePopup.setEventListeners();
+    imagePopup.open(evt);
+  });
+  section.addItem(newCard.createCardElement());
 }
 
 /**
@@ -61,14 +72,8 @@ function loadElement(elementTitle, imageLink) {
  * @param {*} evt The form's submit event.
  */
 function handleProfileFormSubmit(evt) {
-  if (modalTitle.textContent == "Nuevo lugar") {
-    return;
-  }
-  evt.preventDefault();
-
-  profileName.textContent = nameInput.value;
-  profileSubtitle.textContent = aboutInput.value;
-  modal.close();
+  userInfo.setUserInfo(nameInput.value, aboutInput.value);
+  editPopup.close(evt);
 }
 
 /**
@@ -76,13 +81,12 @@ function handleProfileFormSubmit(evt) {
  * @param {*} evt The form's submit event.
  */
 function handleElementFormSubmit(evt) {
-  if (modalTitle.textContent == "Editar perfil") {
-    return;
-  }
-  evt.preventDefault();
-
-  loadElement(elementTitle.value, imageLink.value);
-  modal.close();
+  const inputValues = addPopup._getInputValues();
+  loadElement({
+    name: inputValues["place-input"],
+    link: inputValues["link-input"],
+  });
+  addPopup.close(evt);
 }
 
 const formValidator = new FormValidator(
@@ -94,21 +98,10 @@ const formValidator = new FormValidator(
     inputErrorClass: "input_type_error",
     errorClass: "form__input-error_active",
   },
-  formElement
+  formList
 );
 formValidator.enableValidation();
+addPopup.setEventListeners();
+editPopup.setEventListeners();
 
-formElement.addEventListener("submit", handleProfileFormSubmit);
-formElement.addEventListener("submit", handleElementFormSubmit);
-
-export {
-  modalTitle,
-  profileName,
-  profileSubtitle,
-  nameInput,
-  aboutInput,
-  elementTitle,
-  imageLink,
-  secondResult,
-  modal,
-};
+export { profileName, profileSubtitle, nameInput, aboutInput };
