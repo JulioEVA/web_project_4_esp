@@ -1,8 +1,9 @@
-class Card {
-  constructor(title, link, templateSelector) {
+export default class Card {
+  constructor(title, link, templateSelector, handleCardClick) {
     this._title = title;
     this._link = link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   /**
@@ -45,19 +46,6 @@ class Card {
   }
 
   /**
-   * Shows a bigger version of the clicked image of the element.
-   * @param {*} evt The click event
-   */
-  _handleImageClick(evt) {
-    const imageTitle = document.querySelector(".image-popup__title");
-    const image = document.querySelector(".image-popup__image");
-    image.src = evt.target.src;
-    imageTitle.textContent = evt.target.title;
-    const imagePopup = document.querySelector(".image-popup");
-    imagePopup.showModal();
-  }
-
-  /**
    * Creates each individual listener for each card component.
    */
   _createEventListeners() {
@@ -68,8 +56,6 @@ class Card {
     btnLike.addEventListener("click", this._handleLike);
 
     const elementImage = this._newElement.querySelector(".element__image");
-    elementImage.addEventListener("click", this._handleImageClick);
+    elementImage.addEventListener("click", this._handleCardClick);
   }
 }
-
-export { Card };
