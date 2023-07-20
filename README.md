@@ -18,6 +18,7 @@ Este proyecto se creó utilizando las siguientes tecnologías y técnicas:
   * Flexbox
   * Grid
   * Media queries
+  * NPM
 
 **Enlaces**  
   
