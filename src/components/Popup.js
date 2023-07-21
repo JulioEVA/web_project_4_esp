@@ -9,9 +9,8 @@ export default class Popup {
 
   /**
    * Closes the open popup with a smooth transition.
-   * @param {*} evt The closing event.
    */
-  close(evt) {
+  close() {
     this._popup.setAttribute("closing", true);
     this._popup.addEventListener(
       "animationend",
