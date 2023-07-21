@@ -34,6 +34,12 @@ export default class Popup {
     }
   }
 
+  _handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      this.close(evt);
+    }
+  }
+
   setEventListeners() {
     const closeButton = this._popup.querySelector(".close-button");
     closeButton.addEventListener("click", (evt) => {
@@ -42,6 +48,10 @@ export default class Popup {
 
     this._popup.addEventListener("click", (evt) => {
       this.closeOnOutsideClick(evt);
+    });
+
+    this._popup.addEventListener("keypress", (evt) => {
+      this._handleEscClose(evt);
     });
   }
 }
