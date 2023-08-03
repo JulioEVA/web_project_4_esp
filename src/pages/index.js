@@ -5,51 +5,37 @@ import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Api from "../components/Api.js";
 
 const formList = Array.from(document.querySelectorAll(".form"));
 const profileName = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const nameInput = document.querySelector("#name-input");
 const aboutInput = document.querySelector("#about-input");
-const initialCards = [
-  {
-    name: "Valle de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/web_es_07",
+  headers: {
+    authorization: "07941066-0302-4776-b982-c4274dd7ce77",
   },
-  {
-    name: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lake-louise.jpg",
-  },
-  {
-    name: "Montañas Calvas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
-  },
-  {
-    name: "Parque Nacional de la Vanoise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
-  },
-];
+});
+let initialCards = [];
+await api.getInitialCards().then((cards) => {
+  initialCards = cards;
+});
 const section = new Section(
   { items: initialCards, renderer: loadElement },
   ".elements"
 );
 const addPopup = new PopupWithForm(handleElementFormSubmit, ".add-popup");
 const editPopup = new PopupWithForm(handleProfileFormSubmit, ".edit-popup");
-
 const userInfo = new UserInfo({
-  userName: profileName.textContent,
-  userJob: profileSubtitle.textContent,
+  userName: "",
+  userJob: "",
 });
 
-userInfo.setUserInfo(profileName.textContent, profileSubtitle.textContent);
+await api.getUserInfo().then((user) => {
+  userInfo.setUserInfo(user.name, user.about);
+});
 section.renderItems();
 
 /**
