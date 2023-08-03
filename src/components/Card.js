@@ -1,9 +1,18 @@
 export default class Card {
-  constructor(title, link, templateSelector, handleCardClick) {
+  constructor(
+    title,
+    link,
+    likes,
+    templateSelector,
+    handleCardClick,
+    handleDelete
+  ) {
     this._title = title;
+    this._likes = likes;
     this._link = link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDelete = handleDelete;
   }
 
   /**
@@ -20,21 +29,15 @@ export default class Card {
       .cloneNode(true);
     const newElementImage = newElement.querySelector(".element__image");
     const newElementTitle = newElement.querySelector(".element__title");
+    const newElementLikeCounter = newElement.querySelector(".like-counter");
 
     newElementImage.title = this._title;
     newElementImage.src = this._link;
     newElementTitle.textContent = this._title;
+    newElementLikeCounter.textContent = this._likes.length;
     this._newElement = newElement;
     this._createEventListeners();
     return newElement;
-  }
-
-  /**
-   * Deletes the element on which the delete button was clicked.
-   * @param {*} evt The click event.
-   */
-  _handleDelete(evt) {
-    evt.target.closest(".element").remove();
   }
 
   /**

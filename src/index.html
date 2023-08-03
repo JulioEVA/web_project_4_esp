@@ -113,6 +113,16 @@
         alt="Imagen proporcionada por el usuario"
       />
     </dialog>
+    <dialog class="popup confirmation-popup">
+      <button class="close-button button">
+        <img
+          src="<%=require('./images/close-button.png')%>"
+          alt="Icono de una X"
+        />
+      </button>
+      <h2 class="confirmation-popup__title">¿Estás seguro?</h2>
+      <button class="save-button button" type="submit">Sí</button>
+    </dialog>
     <template class="element-template">
       <div class="element">
         <img
@@ -133,6 +143,7 @@
             src="<%=require('./images/like-button.png')%>"
             alt="Icono de corazón"
           />
+          <div class="like-counter"></div>
         </button>
       </div>
     </template>

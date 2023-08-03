@@ -3,6 +3,7 @@ export default class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
     this._userUrl = this._baseUrl + "/users/me";
+    this._cardsUrl = this._baseUrl + "/cards";
   }
 
   _checkRequestStatus(res) {
@@ -12,7 +13,7 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(this._baseUrl + "/cards", { headers: this._headers })
+    return fetch(this._cardsUrl, { headers: this._headers })
       .then((res) => {
         this._checkRequestStatus(res);
         return res.json();
@@ -34,7 +35,7 @@ export default class Api {
   }
 
   setUserInfo({ name, about }) {
-    fetch(this._userUrl, {
+    return fetch(this._userUrl, {
       method: "PATCH",
       headers: {
         authorization: "07941066-0302-4776-b982-c4274dd7ce77",
@@ -44,6 +45,24 @@ export default class Api {
         name: name,
         about: about,
       }),
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  createCard({ name, link }) {
+    return fetch(this._cardsUrl, {
+      method: "POST",
+      headers: {
+        authorization: "07941066-0302-4776-b982-c4274dd7ce77",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    }).catch((error) => {
+      console.log(error);
     });
   }
 }

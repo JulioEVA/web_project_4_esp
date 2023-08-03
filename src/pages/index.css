@@ -25,10 +25,13 @@
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/like-button/like-button.css);
 @import url(../blocks/like/like.css);
+@import url(../blocks/like-counter/like-counter.css);
 @import url(../blocks/like/_active/like_active.css);
 @import url(../blocks/delete-button/delete-button.css);
 
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/confirmation-popup/confirmation-popup.css);
+@import url(../blocks/confirmation-popup/__title/confirmation-popup__title.css);
 @import url(../blocks/form-popup/form-popup.css);
 @import url(../blocks/form-popup/__title/form-popup__title.css);
 @import url(../blocks/form-popup/__container/form-popup__container.css);

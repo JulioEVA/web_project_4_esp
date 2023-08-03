@@ -6,6 +6,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Api from "../components/Api.js";
+import PopupConfirmation from "../components/PopupConfirmation.js";
 
 const formList = Array.from(document.querySelectorAll(".form"));
 const profileName = document.querySelector(".profile__title");
@@ -44,12 +45,24 @@ section.renderItems();
  * @param {*} elementTitle The element's title.
  * @param {*} imageLink The element's image.
  */
-function loadElement({ name, link }) {
-  const newCard = new Card(name, link, ".element-template", (evt) => {
-    const imagePopup = new PopupWithImage(".image-popup");
-    imagePopup.setEventListeners();
-    imagePopup.open(evt);
-  });
+function loadElement({ name, link, likes }) {
+  const newCard = new Card(
+    name,
+    link,
+    likes,
+    ".element-template",
+    (evt) => {
+      const imagePopup = new PopupWithImage(".image-popup");
+      imagePopup.setEventListeners();
+      imagePopup.open(evt);
+    },
+    () => {
+      const confirmationPopup = new PopupConfirmation(".confirmation-popup");
+      confirmationPopup.setEventListeners();
+      confirmationPopup.open();
+    }
+  );
+
   section.addItem(newCard.createCardElement());
 }
 
@@ -59,6 +72,7 @@ function loadElement({ name, link }) {
  */
 function handleProfileFormSubmit(evt) {
   userInfo.setUserInfo(nameInput.value, aboutInput.value);
+  api.setUserInfo({ name: nameInput.value, about: aboutInput.value });
   editPopup.close(evt);
 }
 
@@ -69,6 +83,10 @@ function handleProfileFormSubmit(evt) {
 function handleElementFormSubmit(evt) {
   const inputValues = addPopup._getInputValues();
   loadElement({
+    name: inputValues["place-input"],
+    link: inputValues["link-input"],
+  });
+  api.createCard({
     name: inputValues["place-input"],
     link: inputValues["link-input"],
   });
