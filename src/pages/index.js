@@ -106,7 +106,7 @@ function loadElement({ name, link, likes, owner, _id }) {
 function handleAvatarFormSubmit(evt) {
   const inputValues = avatarPopup._getInputValues();
 
-  api.updateUserAvatar(inputValues["link-input"]).then((avatar) => {
+  api.updateUserAvatar(inputValues["avatar-link"]).then((avatar) => {
     avatarImg.src = avatar.avatar;
     avatarPopup.close();
   });
