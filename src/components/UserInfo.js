@@ -3,6 +3,7 @@ import {
   profileSubtitle,
   nameInput,
   aboutInput,
+  avatarImg,
 } from "../pages/index.js";
 
 export default class UserInfo {
@@ -21,5 +22,10 @@ export default class UserInfo {
     profileSubtitle.textContent = job;
     nameInput.value = name;
     aboutInput.value = job;
+    avatarImg.src = this._avatarUrl;
+  }
+
+  setUserAvatar(link) {
+    this._avatarUrl = link;
   }
 }
