@@ -19,6 +19,7 @@ Este proyecto se creó utilizando las siguientes tecnologías y técnicas:
   * Grid
   * Media queries
   * NPM
+  * REST API
 
 **Enlaces**  
   
