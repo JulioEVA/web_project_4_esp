@@ -1,6 +1,7 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._submitButton = this._popup.querySelector(".save-button");
   }
 
   open() {
@@ -17,6 +18,7 @@ export default class Popup {
       () => {
         this._popup.removeAttribute("closing");
         this._popup.close();
+        this._submitButton.textContent = "Guardar";
       },
       { once: true }
     );
@@ -37,6 +39,10 @@ export default class Popup {
     if (evt.key === "Escape") {
       this.close(evt);
     }
+  }
+
+  renderLoading() {
+    this._submitButton.textContent = "Guardando...";
   }
 
   setEventListeners() {

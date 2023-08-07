@@ -52,6 +52,7 @@ export default class PopupWithForm extends Popup {
     const submitButton = this._popup.querySelector(".save-button");
     submitButton.addEventListener("click", (evt) => {
       this._submitForm(evt);
+      this.renderLoading();
       evt.preventDefault();
     });
   }

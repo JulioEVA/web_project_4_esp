@@ -12,7 +12,7 @@ export default class PopupConfirmation extends Popup {
     const submitButton = this._popup.querySelector(".save-button");
     submitButton.addEventListener("click", () => {
       this._confirmDelete(this._id);
-      this.close();
+      this.renderLoading();
     });
   }
 }

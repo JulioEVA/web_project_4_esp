@@ -66,10 +66,18 @@ function loadElement({ name, link, likes, owner, _id }) {
         _id,
         ".confirmation-popup",
         () => {
-          api.deleteCard(_id).then(() => {
-            const deletedCard = document.getElementById(_id);
-            deletedCard.remove();
-          });
+          api
+            .deleteCard(_id)
+            .then(() => {
+              const deletedCard = document.getElementById(_id);
+              deletedCard.remove();
+            })
+            .finally(() => {
+              confirmationPopup.close();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       );
       confirmationPopup.setEventListeners();
@@ -110,8 +118,11 @@ function handleAvatarFormSubmit(evt) {
  */
 function handleProfileFormSubmit(evt) {
   userInfo.setUserInfo(nameInput.value, aboutInput.value);
-  api.setUserInfo({ name: nameInput.value, about: aboutInput.value });
-  editPopup.close(evt);
+  api
+    .setUserInfo({ name: nameInput.value, about: aboutInput.value })
+    .finally(() => {
+      editPopup.close(evt);
+    });
 }
 /**
  * Handles the form submit case for the element case.
@@ -127,8 +138,10 @@ function handleElementFormSubmit(evt) {
     })
     .then((newCard) => {
       loadElement(newCard);
+    })
+    .finally(() => {
+      addPopup.close(evt);
     });
-  addPopup.close(evt);
 }
 
 const formValidator = new FormValidator(
