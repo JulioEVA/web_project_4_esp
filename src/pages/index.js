@@ -13,6 +13,7 @@ const profileName = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const nameInput = document.querySelector("#name-input");
 const aboutInput = document.querySelector("#about-input");
+const avatarImg = document.querySelector(".avatar");
 const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/web_es_07",
   headers: {
@@ -29,12 +30,14 @@ const section = new Section(
 );
 const addPopup = new PopupWithForm(handleElementFormSubmit, ".add-popup");
 const editPopup = new PopupWithForm(handleProfileFormSubmit, ".edit-popup");
+const avatarPopup = new PopupWithForm(handleAvatarFormSubmit, ".avatar-popup");
 const userInfo = new UserInfo({
   userName: "",
   userJob: "",
 });
 
 await api.getUserInfo().then((user) => {
+  userInfo.setUserAvatar(user.avatar);
   userInfo.setUserInfo(user.name, user.about);
 });
 section.renderItems();
@@ -45,11 +48,13 @@ section.renderItems();
  * @param {*} elementTitle The element's title.
  * @param {*} imageLink The element's image.
  */
-function loadElement({ name, link, likes }) {
+function loadElement({ name, link, likes, owner, _id }) {
   const newCard = new Card(
     name,
     link,
     likes,
+    owner,
+    _id,
     ".element-template",
     (evt) => {
       const imagePopup = new PopupWithImage(".image-popup");
@@ -57,13 +62,46 @@ function loadElement({ name, link, likes }) {
       imagePopup.open(evt);
     },
     () => {
-      const confirmationPopup = new PopupConfirmation(".confirmation-popup");
+      const confirmationPopup = new PopupConfirmation(
+        _id,
+        ".confirmation-popup",
+        () => {
+          api.deleteCard(_id).then(() => {
+            const deletedCard = document.getElementById(_id);
+            deletedCard.remove();
+          });
+        }
+      );
       confirmationPopup.setEventListeners();
       confirmationPopup.open();
+    },
+    (id) => {
+      api.likeCard(id).then((card) => {
+        processLike(id, card);
+      });
+    },
+    (id) => {
+      api.dislikeCard(id).then((card) => {
+        processLike(id, card);
+      });
     }
   );
 
+  function processLike(id, card) {
+    const likedCard = document.getElementById(id);
+    const likedCardCounter = likedCard.querySelector(".like-counter");
+    likedCardCounter.textContent = card.likes.length;
+  }
   section.addItem(newCard.createCardElement());
+}
+
+function handleAvatarFormSubmit(evt) {
+  const inputValues = avatarPopup._getInputValues();
+
+  api.updateUserAvatar(inputValues["link-input"]).then((avatar) => {
+    avatarImg.src = avatar.avatar;
+    avatarPopup.close();
+  });
 }
 
 /**
@@ -75,21 +113,21 @@ function handleProfileFormSubmit(evt) {
   api.setUserInfo({ name: nameInput.value, about: aboutInput.value });
   editPopup.close(evt);
 }
-
 /**
  * Handles the form submit case for the element case.
  * @param {*} evt The form's submit event.
  */
 function handleElementFormSubmit(evt) {
   const inputValues = addPopup._getInputValues();
-  loadElement({
-    name: inputValues["place-input"],
-    link: inputValues["link-input"],
-  });
-  api.createCard({
-    name: inputValues["place-input"],
-    link: inputValues["link-input"],
-  });
+
+  api
+    .createCard({
+      name: inputValues["place-input"],
+      link: inputValues["link-input"],
+    })
+    .then((newCard) => {
+      loadElement(newCard);
+    });
   addPopup.close(evt);
 }
 
@@ -107,5 +145,6 @@ const formValidator = new FormValidator(
 formValidator.enableValidation();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
+avatarPopup.setEventListeners();
 
-export { profileName, profileSubtitle, nameInput, aboutInput };
+export { profileName, profileSubtitle, nameInput, aboutInput, avatarImg };

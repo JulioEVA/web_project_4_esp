@@ -2,6 +2,7 @@ export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
+    this._authorization = options.headers.authorization;
     this._userUrl = this._baseUrl + "/users/me";
     this._cardsUrl = this._baseUrl + "/cards";
   }
@@ -38,7 +39,7 @@ export default class Api {
     return fetch(this._userUrl, {
       method: "PATCH",
       headers: {
-        authorization: "07941066-0302-4776-b982-c4274dd7ce77",
+        authorization: `${this._authorization}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -50,19 +51,84 @@ export default class Api {
     });
   }
 
+  updateUserAvatar(link) {
+    return fetch(this._userUrl + "/avatar", {
+      method: "PATCH",
+      headers: {
+        authorization: `${this._authorization}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: link,
+      }),
+    })
+      .then((res) => {
+        this._checkRequestStatus(res);
+        return res.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   createCard({ name, link }) {
     return fetch(this._cardsUrl, {
       method: "POST",
       headers: {
-        authorization: "07941066-0302-4776-b982-c4274dd7ce77",
+        authorization: `${this._authorization}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: name,
         link: link,
       }),
+    })
+      .then((res) => res.json())
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  deleteCard(cardId) {
+    return fetch(this._cardsUrl + `/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `${this._authorization}`,
+      },
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  likeCard(cardId) {
+    return fetch(this._cardsUrl + `/likes/${cardId}`, {
+      method: "PUT",
+      headers: {
+        authorization: `${this._authorization}`,
+      },
+    })
+      .then((res) => {
+        this._checkRequestStatus(res);
+        return res.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  dislikeCard(cardId) {
+    return fetch(this._cardsUrl + `/likes/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `${this._authorization}`,
+      },
+    })
+      .then((res) => {
+        this._checkRequestStatus(res);
+        return res.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }

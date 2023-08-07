@@ -10,27 +10,36 @@
     <header class="header">
       <img
         src="<%=require('./images/logo.png')%>"
-        alt="El logo de la página"
+        alt="Page's logo"
         class="logo"
       />
       <hr class="header__separator" />
     </header>
     <main class="main">
       <section class="profile">
-        <img
-          class="avatar"
-          src="<%=require('./images/avatar.jpg')%>"
-          alt="Foto de perfil del usuario"
-        />
+        <div class="avatar-container">
+          <img
+            class="avatar"
+            src="<%=require('./images/avatar.jpg')%>"
+            alt="User avatar"
+          />
+          <button class="avatar-button button">
+            <img
+              class="avatar-edit-icon"
+              src="<%=require('./images/avatar-edit.png')%>"
+              alt="Avatar edit icon"
+            />
+          </button>
+        </div>
         <div class="profile__info">
-          <h1 class="profile__title text">Jacques Cousteau</h1>
+          <h1 class="profile__title text"></h1>
           <button class="edit-button button">
             <img
               src="<%=require('./images/edit-button.png')%>"
-              alt="icono de editar"
+              alt="User info edit icon"
             />
           </button>
-          <h2 class="profile__subtitle text">Explorador</h2>
+          <h2 class="profile__subtitle text"></h2>
         </div>
         <button class="add-button button"></button>
       </section>
@@ -41,7 +50,7 @@
         <button type="button" class="close-button button">
           <img
             src="<%=require('./images/close-button.png')%>"
-            alt="Icono de una X"
+            alt="Close icon"
           />
         </button>
         <h2 class="form-popup__title text">Editar perfil</h2>
@@ -79,7 +88,7 @@
         <h2 class="form-popup__title text">Nuevo lugar</h2>
         <input
           id="place-input"
-          maxlength="40"
+          maxlength="30"
           minlength="2"
           required
           class="input"
@@ -120,8 +129,26 @@
           alt="Icono de una X"
         />
       </button>
-      <h2 class="confirmation-popup__title">¿Estás seguro?</h2>
+      <h2 class="confirmation-popup__title text">¿Estás seguro?</h2>
       <button class="save-button button" type="submit">Sí</button>
+    </dialog>
+    <dialog class="popup avatar-popup">
+      <button class="close-button button">
+        <img
+          src="<%=require('./images/close-button.png')%>"
+          alt="Icono de una X"
+        />
+      </button>
+      <h2 class="avatar-popup__title text">Cambiar foto de perfil</h2>
+      <input
+        id="link-input"
+        minlength="2"
+        required
+        class="input"
+        type="url"
+        placeholder="Enlace a la imagen"
+      />
+      <button class="save-button button" type="submit">Guardar</button>
     </dialog>
     <template class="element-template">
       <div class="element">

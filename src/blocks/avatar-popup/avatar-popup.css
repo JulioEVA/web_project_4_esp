@@ -1,0 +1,15 @@
+.avatar-popup {
+  width: 430px;
+  height: 272px;
+
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  border-radius: 10px;
+  background: #fff;
+}
+
+.avatar-popup[open] {
+  display: flex;
+}

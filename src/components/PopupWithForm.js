@@ -33,9 +33,18 @@ export default class PopupWithForm extends Popup {
       editButton.addEventListener("click", () => {
         this.open();
       });
-    } else {
+    }
+
+    if (this._popup.classList.value.includes("add-popup")) {
       const addButton = document.querySelector(".add-button");
       addButton.addEventListener("click", () => {
+        this.open();
+      });
+    }
+
+    if (this._popup.classList.value.includes("avatar-popup")) {
+      const avatarButton = document.querySelector(".avatar-button");
+      avatarButton.addEventListener("click", () => {
         this.open();
       });
     }
