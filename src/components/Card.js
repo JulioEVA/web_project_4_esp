@@ -2,7 +2,7 @@ export default class Card {
   constructor(
     title,
     link,
-    likes,
+    likes = [],
     owner,
     _id,
     templateSelector,
@@ -52,10 +52,6 @@ export default class Card {
       newElementDeleteButton.classList.toggle("delete-button_inactive");
     }
 
-    if (!this._likes) {
-      this._likes = [];
-    }
-
     this._likes.forEach((like) => {
       if (like._id === this._myId) {
         newElementLikeButton.classList.toggle("like_active");
@@ -67,6 +63,16 @@ export default class Card {
     this._newElement = newElement;
     this._createEventListeners();
     return newElement;
+  }
+
+  /**
+   * Changes the like button appearance and the card's isLiked property.
+   * @param {*} evt The click event
+   * @param {*} isLiked The new value of the isLiked Card's property
+   */
+  _changeLikeStatus(evt, isLiked) {
+    evt.target.classList.toggle("like_active");
+    this._isLiked = isLiked;
   }
 
   /**
@@ -82,12 +88,10 @@ export default class Card {
     btnLike.addEventListener("click", (evt) => {
       if (!this._isLiked) {
         this._handleLike(this._id);
-        evt.target.classList.toggle("like_active");
-        this._isLiked = true;
+        this._changeLikeStatus(evt, true);
       } else {
         this._handleDislike(this._id);
-        evt.target.classList.toggle("like_active");
-        this._isLiked = false;
+        this._changeLikeStatus(evt, false);
       }
     });
 
