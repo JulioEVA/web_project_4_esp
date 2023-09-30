@@ -1,16 +1,17 @@
-# Proyecto 4: Alrededor de los Estados Unidos
+# Project 4: Around the US
 
-### Descripción general
+### General description
   
-**Introducción**    
+**Intro**    
   
-Este es un proyecto que permite al usuario añadir fotos títuladas para que se muestren como elementos que se acomodan de manera dinámica.
+This project is a SPA that allows the user to create cards which contain an image and a title, the user can like or dislike a card, delete its own cards,
+but not other users cards, can change the user's avatatar, name and description.
 
-El proyecto consiste de una página web responsiva pensada para móvil y PC.
+The design is thought for mobile and PC
 
-**Tecnologías y Técnicas**
+**Technologies and techniques**
 
-Este proyecto se creó utilizando las siguientes tecnologías y técnicas:
+This project was created using the following technologies and techniques
   
   * HTML
   * CSS
@@ -21,9 +22,9 @@ Este proyecto se creó utilizando las siguientes tecnologías y técnicas:
   * NPM
   * REST API
 
-**Enlaces**  
+**Resources**  
   
-* [Enlace al proyecto en Figma](https://www.figma.com/file/LDMgqWesKpQkIwhOfEBuTS/WEB%2C-Sprint-5%3A-Around-The-U.S.-%7C-desktop-%2B-mobile?node-id=0%3A1)
+* [Link to the figma design](https://www.figma.com/file/LDMgqWesKpQkIwhOfEBuTS/WEB%2C-Sprint-5%3A-Around-The-U.S.-%7C-desktop-%2B-mobile?node-id=0%3A1)
 
-* [Enlace a la página web](https://julioeva.github.io/web_project_4_esp/)
+* [Link to the web page](https://julioeva.github.io/web_project_4_esp/)
   
