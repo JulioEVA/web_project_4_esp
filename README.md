@@ -5,7 +5,7 @@
 **Intro**    
   
 This project is a SPA that allows the user to create cards which contain an image and a title, the user can like or dislike a card, delete its own cards,
-but not other users cards, can change the user's avatatar, name and description.
+but not other users cards, can change the users avatar, name and description.
 
 The design is thought for mobile and PC
 
